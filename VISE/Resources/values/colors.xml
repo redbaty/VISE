@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_color">#2962ff</color>
+    <color name="accent_color">#1e88e5</color>
+    <color name="statusbar_color">#474747</color>
+    <color name="cardview_error_color">#e53935</color>
+    <color name="cardview_connected_color">#00e676</color>
+</resources>

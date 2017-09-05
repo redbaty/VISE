@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_connected_string">Conectado a</string>
+    <string name="app_disconnected_string">Falha ao tentar conexão</string>
+</resources>

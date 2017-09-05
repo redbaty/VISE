@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name" translatable="false">VISE</string>
+  <string name="app_connected_string">Connected to</string>
+  <string name="app_disconnected_string">Connection failed</string>
+</resources>

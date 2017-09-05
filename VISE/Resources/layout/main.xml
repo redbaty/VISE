@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootMainPageLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="25px"
+    android:minWidth="25px"
+    android:orientation="vertical">
+
+  <android.support.v7.widget.CardView
+      android:id="@+id/cardView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      app:cardBackgroundColor="@color/cardview_error_color"
+      app:cardCornerRadius="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+      <ImageView
+          android:id="@+id/cardViewIcon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:tint="@android:color/white"
+          app:srcCompat="@drawable/ic_error_outline_black_18dp" />
+
+      <TextView
+          android:id="@+id/connectionTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="5dp"
+          android:layout_toEndOf="@+id/cardViewIcon"
+          android:layout_weight="1"
+          android:foregroundTint="@android:color/background_light"
+          android:maxLines="1"
+          android:text="@string/app_disconnected_string"
+          android:textColor="?android:attr/colorForeground" />
+
+      <TextView
+          android:id="@+id/ipText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="5dp"
+          android:layout_toEndOf="@+id/connectionTextView"
+          android:layout_weight="1"
+          android:foregroundTint="@android:color/background_light"
+          android:textColor="?android:attr/colorForeground" />
+    </RelativeLayout>
+
+  </android.support.v7.widget.CardView>
+
+  <TextView
+      android:id="@+id/titleText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/relativeLayout5"
+      android:layout_centerHorizontal="true"
+      android:gravity="center_horizontal"
+      android:textAlignment="center"
+      android:textSize="18sp"
+      android:textStyle="bold" />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/relativeLayout5"
+      android:id="@+id/relativeLayout6">
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:text="00:00:00"
+        android:textColor="?android:attr/colorForeground"
+        android:textSize="18sp" />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_centerVertical="true"
+      android:id="@+id/relativeLayout5">
+
+    <ImageButton
+        android:id="@+id/skipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_toEndOf="@+id/playPauseBtn"
+        android:background="@drawable/ripple"
+        android:elevation="500dp"
+        android:padding="0dp"
+        android:tint="?android:attr/colorForeground"
+        app:srcCompat="@drawable/ic_skip_next_black_48dp" />
+
+    <ImageButton
+        android:id="@+id/fastForwardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_toEndOf="@+id/skipButton"
+        android:background="@drawable/ripple"
+        android:elevation="500dp"
+        android:padding="0dp"
+        android:tint="?android:attr/colorForeground"
+        app:srcCompat="@drawable/ic_fast_forward_black_48dp" />
+
+    <ImageButton
+        android:id="@+id/previousButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_toStartOf="@+id/playPauseBtn"
+        android:background="@drawable/ripple"
+        android:elevation="500dp"
+        android:padding="0dp"
+        android:tint="?android:attr/colorForeground"
+        app:srcCompat="@drawable/ic_skip_previous_black_48dp" />
+
+    <ImageButton
+        android:id="@+id/skipTimeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_toEndOf="@+id/fastForwardButton"
+        android:background="@drawable/ripple"
+        android:elevation="10dp"
+        android:padding="0dp"
+        android:tint="?android:attr/colorForeground"
+        app:srcCompat="@drawable/ic_forward_30_black_48dp" />
+
+    <com.wnafee.vector.MorphButton
+        android:id="@+id/playPauseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:elevation="500dp"
+        android:gravity="bottom"
+        app:vc_endDrawable="@drawable/ic_play_to_pause"
+        app:vc_foregroundTint="?android:attr/colorForeground"
+        app:vc_startDrawable="@drawable/ic_pause_to_play" />
+
+    <ImageButton
+        android:id="@+id/exitFullscreenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/previousButton"
+        android:background="@drawable/ripple"
+        android:elevation="10dp"
+        android:padding="0dp"
+        android:tint="?android:attr/colorForeground"
+        app:srcCompat="@drawable/ic_fullscreen_exit_black_48dp" />
+
+    <ImageButton
+        android:id="@+id/fullScreenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_toStartOf="@+id/exitFullscreenButton"
+        android:background="@drawable/ripple"
+        android:elevation="10dp"
+        android:padding="0dp"
+        android:tint="?android:attr/colorForeground"
+        app:srcCompat="@drawable/ic_fullscreen_black_48dp" />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:id="@+id/relativeLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/relativeLayout6">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@color/cardview_light_background"
+        app:srcCompat="@drawable/ic_volume_up_black_36dp" />
+
+    <com.xw.repo.BubbleSeekBar
+        android:id="@+id/volumeSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toEndOf="@+id/imageView"
+        app:bsb_bubble_color="@color/accent_color"
+        app:bsb_max="320"
+        app:bsb_min="0"
+        app:bsb_progress="320"
+        app:bsb_second_track_color="@color/accent_color"
+        app:bsb_section_text_color="@color/accent_color"
+        app:bsb_thumb_color="@color/accent_color"
+        app:bsb_thumb_text_color="@color/accent_color"
+        app:bsb_touch_to_seek="true"
+        app:bsb_track_color="@color/statusbar_color" />
+
+  </RelativeLayout>
+
+</RelativeLayout>
