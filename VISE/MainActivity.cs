@@ -15,6 +15,7 @@ using Com.XW.Repo;
 using Sof.Vlc.Http;
 using Sof.Vlc.Http.Data;
 using VectorCompat;
+using System.Threading;
 
 namespace VISE
 {
@@ -26,7 +27,6 @@ namespace VISE
         private ImageView CardViewIcon { get; set; }
         public VlcClient Client { get; set; }
         private TextView ConnectionTextView { get; set; }
-        private ImageButton ExitFullscreenpButton { get; set; }
         private ImageButton FastForwardButton { get; set; }
         private ImageButton FullscreenButton { get; set; }
         private TextView IpTextView { get; set; }
@@ -48,14 +48,15 @@ namespace VISE
         private int ReceivedPackagesCount { get; set; }
         private RelativeLayout RootLayout { get; set; }
 
-        private BubbleSeekBar Seekbar { get; set; }
+        private BubbleSeekBar VolumeSeekbar { get; set; }
+        private SeekBar TimeShiftSeekbar { get; set; }
 
         private Settings Settings { get; } = new Settings();
 
         private ImageButton SkipButton { get; set; }
-        private ImageButton TimeSkipButton { get; set; }
 
         private TextView TimeTextView { get; set; }
+        private TextView TimeShiftTextView { get; set; }
         private TextView TitleTextView { get; set; }
 
         private async Task AddNextEpisode()
@@ -137,12 +138,12 @@ namespace VISE
             {
                 TimeTextView.Text = time.ToString();
 
-                if (Seekbar.Progress != vlcStatus.Volume)
+                if (VolumeSeekbar.Progress != vlcStatus.Volume)
                     ReceivedPackagesCount++;
 
                 if (ReceivedPackagesCount >= 2)
                 {
-                    Seekbar.SetProgress(vlcStatus.Volume);
+                    VolumeSeekbar.SetProgress(vlcStatus.Volume);
                     ReceivedPackagesCount = 0;
                 }
 
@@ -203,8 +204,7 @@ namespace VISE
 
         private async void FullscreenButtonOnClick(object sender, EventArgs eventArgs)
         {
-            if (!Client.Status.IsFullScreen)
-                await Client.ToggleFullscreen();
+            await Client.ToggleFullscreen();
         }
 
         private async Task<VlcPlaylistLeaf> GetCurrentLeaf()
@@ -230,6 +230,7 @@ namespace VISE
             Client.StatusUpdated += ClientOnStatusUpdated;
 
             TimeTextView = FindViewById<TextView>(Resource.Id.timeTextView);
+            TimeShiftTextView = FindViewById<TextView>(Resource.Id.timeShiftText);
             TitleTextView = FindViewById<TextView>(Resource.Id.titleText);
             IpTextView = FindViewById<TextView>(Resource.Id.ipText);
             ConnectionTextView = FindViewById<TextView>(Resource.Id.connectionTextView);
@@ -240,23 +241,92 @@ namespace VISE
             CardViewIcon = FindViewById<ImageView>(Resource.Id.cardViewIcon);
 
             SkipButton = FindViewById<ImageButton>(Resource.Id.skipButton);
+            SkipButton.Click += SkipButtonOnClick;
+
             FastForwardButton = FindViewById<ImageButton>(Resource.Id.fastForwardButton);
-            TimeSkipButton = FindViewById<ImageButton>(Resource.Id.skipTimeButton);
-            FullscreenButton = FindViewById<ImageButton>(Resource.Id.fullScreenButton);
-            ExitFullscreenpButton = FindViewById<ImageButton>(Resource.Id.exitFullscreenButton);
+            FastForwardButton.Click += FastForwardButtonOnClick;
+
+            FullscreenButton = FindViewById<ImageButton>(Resource.Id.fullscreenButton);
+            FullscreenButton.Click += FullscreenButtonOnClick;
 
             PlayPauseButton = FindViewById<MorphButton>(Resource.Id.playPauseBtn);
-
-            Seekbar = FindViewById<BubbleSeekBar>(Resource.Id.volumeSeekBar);
-
             PlayPauseButton.Click += PlayPauseButtonOnClick;
-            SkipButton.Click += SkipButtonOnClick;
-            TimeSkipButton.Click += TimeSkipButtonOnClick;
-            FastForwardButton.Click += FastForwardButtonOnClick;
-            Seekbar.ProgressChanged += SeekbarOnProgressChanged;
-            FullscreenButton.Click += FullscreenButtonOnClick;
-            ExitFullscreenpButton.Click += ExitFullscreenpButtonOnClick;
+
+            VolumeSeekbar = FindViewById<BubbleSeekBar>(Resource.Id.volumeSeekBar);
+            VolumeSeekbar.ProgressChanged += SeekbarOnProgressChanged;
+
+            TimeShiftSeekbar = FindViewById<SeekBar>(Resource.Id.timeShiftBar);
+            TimeShiftSeekbar.StopTrackingTouch += TimeShiftSeekbar_StopTrackingTouch;
+            TimeShiftSeekbar.ProgressChanged += TimeShiftSeekbar_ProgressChanged;
+
             IsEnabled = false;
+        }
+
+        private void TimeShiftSeekbar_ProgressChanged(object sender, SeekBar.ProgressChangedEventArgs e)
+        {
+            switch (e.SeekBar.Progress)
+            {
+                case 0: //-10 Seconds
+                    TimeShiftTextView.Text = "-10 Segundos";
+                    break;
+                case 1: //-30 Seconds
+                    TimeShiftTextView.Text = "-30 Segundos";
+                    break;
+                case 2: //-1:00 Seconds
+                    TimeShiftTextView.Text = "-1 Minuto";
+                    break;
+                case 3: //-1:30 Seconds
+                    TimeShiftTextView.Text = "-1 Minuto e 30 Segundos";
+                    break;
+                case 4:
+                    TimeShiftTextView.Text = "Mova a barra para avançar / retroceder o tempo";
+                    break;
+                case 5: //+10 Seconds
+                    TimeShiftTextView.Text = "+10 Segundos";
+                    break;
+                case 6: //+30 Seconds
+                    TimeShiftTextView.Text = "+30 Segundos";
+                    break;
+                case 7: //+1:00 Seconds
+                    TimeShiftTextView.Text = "+1 Minuto";
+                    break;
+                case 8: //+1:30 Seconds
+                    TimeShiftTextView.Text = "+1 Minuto e 30 Segundos";
+                    break;
+            }
+        }
+
+        private async void TimeShiftSeekbar_StopTrackingTouch(object sender, SeekBar.StopTrackingTouchEventArgs e)
+        {
+            switch (e.SeekBar.Progress)
+            {
+                case 0: //-10 Seconds
+                    await Client.SetRelativePosition(10);
+                    break;
+                case 1: //-30 Seconds
+                    await Client.SetRelativePosition(30);
+                    break;
+                case 2: //-1:00 Seconds
+                    await Client.SetRelativePosition(60);
+                    break;
+                case 3: //-1:30 Seconds
+                    await Client.SetRelativePosition(-90);
+                    break;
+                case 5: //+10 Seconds
+                    await Client.SetRelativePosition(10);
+                    break;
+                case 6: //+30 Seconds
+                    await Client.SetRelativePosition(30);
+                    break;
+                case 7: //+1:00 Seconds
+                    await Client.SetRelativePosition(60);
+                    break;
+                case 8: //+1:30 Seconds
+                    await Client.SetRelativePosition(90);
+                    break;
+            }
+
+            RunOnUiThread(() => TimeShiftSeekbar.SetProgress(4, true));
         }
 
         private async void PlayPauseButtonOnClick(object sender, EventArgs eventArgs)
@@ -273,7 +343,7 @@ namespace VISE
             if (!Client.IsConnected)
                 return;
 
-            await Client.SetVolume(Seekbar.Progress);
+            await Client.SetVolume(VolumeSeekbar.Progress);
             ReceivedPackagesCount = 0;
         }
 
@@ -283,11 +353,6 @@ namespace VISE
                 await AddNextEpisode();
 
             await Client.Next();
-        }
-
-        private async void TimeSkipButtonOnClick(object sender, EventArgs eventArgs)
-        {
-            await Client.SetRelativePosition(Settings.SkipTime);
         }
     }
 }
