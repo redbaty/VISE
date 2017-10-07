@@ -30,7 +30,6 @@
           android:id="@+id/cardViewIcon"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_weight="1"
           android:tint="@android:color/white"
           app:srcCompat="@drawable/ic_error_outline_black_18dp" />
 
@@ -58,7 +57,6 @@
           android:foregroundTint="@android:color/background_light"
           android:textColor="?android:attr/colorForeground" />
     </RelativeLayout>
-
   </android.support.v7.widget.CardView>
 
   <TextView
@@ -69,6 +67,7 @@
       android:layout_centerHorizontal="true"
       android:layout_margin="10dp"
       android:gravity="center_horizontal"
+      android:text="@string/app_unknown_title"
       android:textAlignment="center"
       android:textSize="18sp"
       android:textStyle="bold" />
@@ -77,53 +76,34 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentStart="true"
-      android:layout_below="@+id/relativeLayout5"
-      android:id="@+id/relativeLayout6">
-
-  </RelativeLayout>
-
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentStart="true"
       android:layout_centerVertical="true"
       android:id="@+id/relativeLayout5">
 
-    <ImageButton
-        android:id="@+id/skipButton"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fullscreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_toEndOf="@+id/playPauseBtn"
-        android:background="@drawable/ripple"
-        android:elevation="500dp"
-        android:padding="0dp"
-        android:tint="?android:attr/colorForeground"
-        app:srcCompat="@drawable/ic_skip_next_black_48dp" />
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toStartOf="@+id/previousButton"
+        android:padding="10dp"
+        android:src="@drawable/ic_fullscreen_black_48dp"
+        android:tint="@android:color/white"
+        app:fabSize="normal" />
 
-    <ImageButton
-        android:id="@+id/fastForwardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_toEndOf="@+id/skipButton"
-        android:background="@drawable/ripple"
-        android:elevation="500dp"
-        android:padding="0dp"
-        android:tint="?android:attr/colorForeground"
-        app:srcCompat="@drawable/ic_fast_forward_black_48dp" />
-
-    <ImageButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/previousButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="0dp"
         android:layout_toStartOf="@+id/playPauseBtn"
-        android:background="@drawable/ripple"
-        android:elevation="500dp"
-        android:padding="0dp"
-        android:tint="?android:attr/colorForeground"
-        app:srcCompat="@drawable/ic_skip_previous_black_48dp" />
+        android:padding="10dp"
+        android:src="@drawable/ic_skip_previous_black_48dp"
+        android:tint="@android:color/white"
+        app:fabSize="normal" />
 
     <com.wnafee.vector.MorphButton
         android:id="@+id/playPauseBtn"
@@ -131,25 +111,37 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
-        android:elevation="500dp"
-        android:gravity="bottom"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:vc_endDrawable="@drawable/ic_play_to_pause"
         app:vc_foregroundTint="?android:attr/colorForeground"
         app:vc_startDrawable="@drawable/ic_pause_to_play" />
 
-    <ImageButton
-        android:id="@+id/fullscreenButton"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/skipButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/previousButton"
-        android:background="@drawable/ripple"
-        android:elevation="10dp"
-        android:padding="0dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_toEndOf="@+id/playPauseBtn"
+        android:padding="10dp"
+        android:src="@drawable/ic_skip_next_black_48dp"
         android:tint="?android:attr/colorForeground"
-        app:srcCompat="@drawable/ic_fullscreen_black_48dp" />
+        app:fabSize="normal" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fastForwardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/skipButton"
+        android:padding="10dp"
+        android:src="@drawable/ic_fast_forward_black_48dp"
+        android:tint="@android:color/white"
+        app:fabSize="normal" />
   </RelativeLayout>
 
   <RelativeLayout
@@ -157,35 +149,36 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentStart="true"
-      android:layout_below="@+id/relativeLayout6">
+      android:layout_below="@+id/relativeLayout5"
+      android:layout_marginTop="30dp">
+
+    <TextView
+        android:id="@+id/progressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="0%" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
         android:tint="@color/cardview_light_background"
         app:srcCompat="@drawable/ic_volume_up_black_36dp" />
 
-    <com.xw.repo.BubbleSeekBar
+    <SeekBar
         android:id="@+id/volumeSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/progressText"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/imageView"
-        app:bsb_bubble_color="@color/accent_color"
-        app:bsb_max="320"
-        app:bsb_min="0"
-        app:bsb_progress="320"
-        app:bsb_second_track_color="@color/accent_color"
-        app:bsb_section_text_color="@color/accent_color"
-        app:bsb_thumb_color="@color/accent_color"
-        app:bsb_thumb_text_color="@color/accent_color"
-        app:bsb_touch_to_seek="true"
-        app:bsb_track_color="@color/statusbar_color" />
-
+        android:max="125" />
   </RelativeLayout>
 
   <SeekBar
@@ -210,24 +203,25 @@
       android:text="Mova a barra para avançar / retroceder o tempo" />
 
   <TextView
-      android:id="@+id/textView9"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignBaseline="@+id/textView8"
-      android:layout_alignBottom="@+id/textView8"
-      android:layout_alignParentEnd="true"
-      android:text="-1:30" />
-
-  <TextView
       android:id="@+id/timeTextView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_below="@+id/timeShiftBar"
       android:layout_centerHorizontal="true"
-      android:layout_marginTop="25dp"
       android:text="00:00:00"
       android:textColor="?android:attr/colorForeground"
       android:textSize="24sp"
       android:textStyle="bold" />
 
+  <TextView
+      android:id="@+id/timeTextView2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/titleText"
+      android:layout_centerHorizontal="true"
+      android:lines="1"
+      android:text="@string/app_unknown_duration"
+      android:textColor="?android:attr/colorForeground"
+      android:textSize="24sp"
+      android:textStyle="bold" />
 </RelativeLayout>
