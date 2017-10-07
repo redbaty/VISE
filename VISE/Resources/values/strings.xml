@@ -3,4 +3,15 @@
   <string name="app_name" translatable="false">VISE</string>
   <string name="app_connected_string">Connected to</string>
   <string name="app_disconnected_string">Connection failed</string>
+  <string name="app_addcomputer_title">Add a new computer</string>
+  <string name="app_addcomputer_dialog_password">Password</string>
+  <string name="app_addcomputer_connect">Connect</string>
+  <string name="app_addcomputer_cancel">Cancel</string>
+  <string name="app_remove_string">Remove</string>
+  <string name="app_available_string">Available</string>
+  <string name="app_unavailable_string">Unavailable</string>
+  <string name="app_authentication_string">Authentication</string>
+  <string name="app_authentication_message_string">Please type the VLC Http interface password</string>
+  <string name="app_unknown_title">Unknown title</string>
+  <string name="app_unknown_duration">Unknown duration</string>
 </resources>

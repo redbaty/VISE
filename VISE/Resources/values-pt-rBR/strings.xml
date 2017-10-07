@@ -2,4 +2,15 @@
 <resources>
     <string name="app_connected_string">Conectado a</string>
     <string name="app_disconnected_string">Falha ao tentar conexão</string>
+    <string name="app_addcomputer_title">Adicionar computador</string>
+    <string name="app_addcomputer_dialog_password">Senha</string>
+    <string name="app_addcomputer_connect">Conectar</string>
+    <string name="app_addcomputer_cancel">Cancelar</string>
+    <string name="app_remove_string">Remover</string>
+    <string name="app_available_string">Disponível</string>
+    <string name="app_unavailable_string">Indisponível</string>
+    <string name="app_authentication_string">Autenticação</string>
+    <string name="app_authentication_message_string">Por favor digite a senha do VLC</string>
+    <string name="app_unknown_title">Titulo desconhecido</string>
+    <string name="app_unknown_duration">Duração desconhecida</string>
 </resources>
