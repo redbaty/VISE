@@ -32,4 +32,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.wnafee:vector-compat:1.0.5'
     compile 'com.xw.repo:bubbleseekbar:3.6-lite'
+	compile 'com.github.markushi:circlebutton:1.1'
+	compile 'com.balysv:material-ripple:1.0.2'
 }
