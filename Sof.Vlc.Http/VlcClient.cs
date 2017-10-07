@@ -1,13 +1,14 @@
-﻿using System;
-using System.Text;
+﻿using Sof.Vlc.Http.Data;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Sof.Vlc.Http.Data;
+using Serilog;
 
 namespace Sof.Vlc.Http
 {
@@ -16,6 +17,10 @@ namespace Sof.Vlc.Http
     /// </summary>
     public sealed class VlcClient : VlcPollable, INotifyPropertyChanged
     {
+        private ILogger Log { get; } = new LoggerConfiguration()
+            .WriteTo.RollingFile("logs\\myapp-{Date}.txt")
+            .CreateLogger();
+
         /// <summary>
         /// Occurs when the VLC instance cannot be reached.
         /// </summary>
@@ -130,7 +135,7 @@ namespace Sof.Vlc.Http
             client = new HttpClient
             {
                 BaseAddress = new Uri("http://" + host + ":" + port + "/"),
-                Timeout = new TimeSpan(0, 0, 0, 0,500)
+                Timeout = new TimeSpan(0, 0, 0, 0, 500)
             };
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedPassword);
             client.DefaultRequestHeaders.Accept.Clear();
@@ -301,7 +306,7 @@ namespace Sof.Vlc.Http
         /// </summary>
         public async Task SetPercentageVolume(int val)
         {
-            await SendCommand("command=volume&val=" + val + "%");
+            await SendCommand("command=volume&val=" + 320 * val / 125);
         }
 
         /// <summary>
@@ -320,7 +325,7 @@ namespace Sof.Vlc.Http
         public async Task SortPlaylist(VlcPlaylistSortKey key,
             VlcPlaylistSortOrder order = VlcPlaylistSortOrder.Ascending)
         {
-            await SendCommand("command=pl_sort&val=" + GetSortKeyString(key) + "&id=" + (int) order);
+            await SendCommand("command=pl_sort&val=" + GetSortKeyString(key) + "&id=" + (int)order);
         }
 
         /// <summary>
@@ -517,6 +522,7 @@ namespace Sof.Vlc.Http
                 case VlcPlaylistAddMode.NoAudio:
                     command.Append("&option=noaudio");
                     break;
+
                 case VlcPlaylistAddMode.NoVideo:
                     command.Append("&option=novideo");
                     break;
@@ -608,7 +614,7 @@ namespace Sof.Vlc.Http
 
             var stream = await response.Content.ReadAsStreamAsync();
 
-            var dir = (VlcDirectoryResponse) directorySerializer.Deserialize(stream);
+            var dir = (VlcDirectoryResponse)directorySerializer.Deserialize(stream);
 
             DirectoryUpdated?.Invoke(this, dir.Items);
 
@@ -635,7 +641,7 @@ namespace Sof.Vlc.Http
 
             var stream = await response.Content.ReadAsStreamAsync();
 
-            var pl = (VlcPlaylistResponse) playlistSerializer.Deserialize(stream);
+            var pl = (VlcPlaylistResponse)playlistSerializer.Deserialize(stream);
 
             PlaylistUpdated?.Invoke(this, pl.Items);
 
@@ -645,7 +651,7 @@ namespace Sof.Vlc.Http
         /// <summary>
         /// Send a the command to the VLC media player.
         /// </summary>
-        /// <param name="query">The query to send. If a null query is provided, just an updated status 
+        /// <param name="query">The query to send. If a null query is provided, just an updated status
         /// will be requested.</param>
         private async Task SendCommand(string query = null)
         {
@@ -669,7 +675,7 @@ namespace Sof.Vlc.Http
 
                 try
                 {
-                    Status = (VlcStatus) statusSerializer.Deserialize(stream);
+                    Status = (VlcStatus)statusSerializer.Deserialize(stream);
                 }
                 catch (Exception e)
                 {

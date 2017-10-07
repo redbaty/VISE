@@ -26,7 +26,6 @@ namespace Sof.Vlc.Http
         public VlcScanner()
         {
             GenerateIps();
-            Start();
         }
 
         /// <summary>
@@ -41,20 +40,17 @@ namespace Sof.Vlc.Http
         /// <returns><c>true</c> if an running HTTP interface is found.</returns>
         /// <param name="ip">IP address.</param>
         /// <param name="port">Port number.</param>
-        private async Task<bool> CheckHostForVlc(string ip, int port)
+        public async Task<bool> CheckHostForVlc(string ip, int port = 8080)
         {
             var requestUri = $"http://{ip}:{port}/requests/status.xml";
 
             try
             {
-                using (var client = new HttpClient {Timeout = new TimeSpan(0, 0, 0, 0, 100)})
+                using (var client = new HttpClient { Timeout = TimeSpan.FromSeconds(1) })
                 {
                     var response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead);
 
-                    if (response?.Headers?.WwwAuthenticate?.FirstOrDefault()?.Parameter == "realm=\"VLC stream\"")
-                        return true;
-
-                    return false;
+                    return response?.Headers?.WwwAuthenticate?.FirstOrDefault()?.Parameter == "realm=\"VLC stream\"";
                 }
             }
             catch (TaskCanceledException)

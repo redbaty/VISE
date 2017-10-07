@@ -8,6 +8,7 @@ namespace Sof.Vlc.Http.Data
     {
         [XmlElement(ElementName = "info")]
         public List<Info> Info { get; set; }
+
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
     }
