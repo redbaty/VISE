@@ -165,7 +165,7 @@ namespace VISE.Activies
             {
                 TimeTextView.Text = time.ToString();
 
-                var value = (int)Math.Round((decimal)(125.0 * vlcStatus.Volume / 320.0));
+                var value = (int) Math.Round((decimal) (125.0 * vlcStatus.Volume / 320.0));
 
                 if (CanProgressBeSet)
                     VolumeSeekbar.SetProgress(value, true);
@@ -235,9 +235,9 @@ namespace VISE.Activies
         private async void SkipButtonOnClick(object sender, EventArgs eventArgs)
         {
             if ((await Client.GetPlaylist()).First().Leaves?.OrderBy(i => i.Name).Last()?.Current != null)
-                await DirectoryManager.AddNextEpisode();
-
-            await Client.Next();
+                await DirectoryManager.PlayNextEpisode();
+            else
+                await Client.Next();
         }
 
         private void TimeShiftSeekbar_ProgressChanged(object sender, SeekBar.ProgressChangedEventArgs e)

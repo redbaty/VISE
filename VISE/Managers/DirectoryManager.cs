@@ -37,7 +37,7 @@ namespace VISE.Managers
             return current;
         }
 
-        public async Task AddNextEpisode()
+        public async Task PlayNextEpisode()
         {
             try
             {
@@ -52,7 +52,7 @@ namespace VISE.Managers
 
                 if (next.Count == 2)
                 {
-                    await Client.Add(next.Last().Path);
+                    await Client.Play(next.Last().Path);
                 }
 
             }
